@@ -63,7 +63,7 @@ const UpdateUser = () => {
              upazila: updatedUpazila
         }
         // 
-        const user = await axiosPublic.patch(`/dashboard/userProfile/updateUser/${matchingUser._id}`, updatedUserData);
+        const user = await axiosPublic.patch(`/dashboard/profile/updateUser/${matchingUser._id}`, updatedUserData);
         console.log(user.data)
         if (user.data.modifiedCount > 0) {
             swal({

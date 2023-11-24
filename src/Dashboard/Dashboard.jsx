@@ -1,9 +1,9 @@
 import { NavLink, Outlet } from "react-router-dom";
-import useAuth from "../Hooks/useAuth";
+
 
 
 const Dashboard = () => {
-    const {user} = useAuth();
+   
 
     const isAdmin = !true
     const isVolunteer = !true
@@ -19,16 +19,29 @@ const Dashboard = () => {
         <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
 {/* Sidebar content here */}
 
-<li>
 
-    <NavLink to="/dashboard/userProfile">
-            
-            Profile</NavLink>
-    
-    </li>
 
 {/* Donor section */}
-{!isAdmin && !isVolunteer && <li><a>Donor</a></li>}
+{!isAdmin && !isVolunteer && 
+   <div>
+
+   <li>
+<NavLink to="/dashboard/profile"> 
+        Profile</NavLink>
+</li>
+     <li>
+<NavLink to="/myDonationRequests">
+        My Donation Request</NavLink>
+</li>
+     <li>
+<NavLink to="create-donation-request">
+       Create Donation Request</NavLink>
+</li>
+
+<li><a>Donor</a></li>
+   </div>
+
+}
 
 
 {/* Admin section */}
@@ -43,12 +56,7 @@ const Dashboard = () => {
         </div>
         {/* dashboard content */}
         <div className="flex-1 pl-20 pt-10">
-        <h2 className="text-3xl">
-                <span>Hi, Welcome </span>
-                {
-                    user?.displayName ? user.displayName : 'Back'
-                }
-            </h2>
+       
             <Outlet></Outlet>
         </div>
     </div>

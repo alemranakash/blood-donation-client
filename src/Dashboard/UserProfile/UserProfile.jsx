@@ -50,6 +50,7 @@ const UserProfile = () => {
         <div>
           {matchingUser ? (
             <div>
+              
                  <img className="w-36 rounded-md mt-10" src={matchingUser.photoUrl} alt="" />
               <h1 className="">Email: {matchingUser.email}</h1>
               <h1>Name: {matchingUser.name}</h1>

@@ -7,6 +7,8 @@ import Dashboard from "../Dashboard/Dashboard";
 import UserProfile from "../Dashboard/UserProfile/UserProfile";
 import PrivateRoutes from "./PrivateRoutes";
 import UpdateUser from "../Dashboard/UserProfile/UpdateUser";
+import CreateDonationRequest from "../Dashboard/Donor/CreateDonationRequest";
+import DonorDashboard from "../Dashboard/Donor/DonorDashboard";
 
 export const router = createBrowserRouter([
     {
@@ -32,13 +34,20 @@ export const router = createBrowserRouter([
             element: <Dashboard></Dashboard>,
             children:[
               {
-                path: "userProfile",
+                path: "profile",
                 element: <PrivateRoutes><UserProfile></UserProfile></PrivateRoutes>,
               },
               {
-                path: "userProfile/updateUser/:id",
+                path: "profile/updateUser/:id",
                 element: <UpdateUser></UpdateUser>,
                 loader: ({params})=> fetch(`http://localhost:5000/users/${params.id}`)
+              },
+             { path: "create-donation-request",
+              element: <PrivateRoutes><CreateDonationRequest></CreateDonationRequest></PrivateRoutes>
+            },
+              {
+                path: "",
+                element: <DonorDashboard></DonorDashboard>
               },
             ]
           },

@@ -9,6 +9,10 @@ const Navbar = () => {
 
     const authenticatedNavLinks = <>
         <li><NavLink to={"/"}>Home</NavLink></li>
+        <li><NavLink to={"/donation-request-home"}>Donation Request</NavLink></li>
+        <li><NavLink to={"/blog-home"}>Blog</NavLink></li>
+        <li><NavLink to={"/dashboard"}>Dashboard</NavLink></li>
+        <li><NavLink to={"/funding"}>Funding</NavLink></li>
      
        
 

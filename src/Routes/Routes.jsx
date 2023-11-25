@@ -12,6 +12,7 @@ import DonorDashboard from "../Dashboard/Donor/DonorDashboard";
 import AdminDashboard from "../Dashboard/Admin/AdminDashboard";
 import MyDonationRequests from "../Dashboard/Donor/MyDonationRequests";
 import EditBloodRequest from "../Dashboard/Donor/EditBloodRequest";
+import BloodDonationDetails from "../Dashboard/Donor/BloodDonationDetails";
 
 export const router = createBrowserRouter([
     {
@@ -58,9 +59,22 @@ export const router = createBrowserRouter([
                 element: <MyDonationRequests></MyDonationRequests>
               },
               {
+                path: "my-donation-requests/editBloodRequest/:id",
+                element: <PrivateRoutes><EditBloodRequest></EditBloodRequest></PrivateRoutes>,
+                // loader: ({params})=> fetch(`http://localhost:5000/bloodRequest/${params.id}`)
+              },
+              {
                 path: "donorDashboard/editBloodRequest/:id",
                 element: <PrivateRoutes><EditBloodRequest></EditBloodRequest></PrivateRoutes>,
                 // loader: ({params})=> fetch(`http://localhost:5000/bloodRequest/${params.id}`)
+              },
+              {
+                path: "donorDashboard/bloodDonationDetails/:id",
+                element: <PrivateRoutes><BloodDonationDetails></BloodDonationDetails></PrivateRoutes>,
+              },
+              {
+                path: "my-donation-requests/bloodDonationDetails/:id",
+                element: <PrivateRoutes><BloodDonationDetails></BloodDonationDetails></PrivateRoutes>,
               },
 
 

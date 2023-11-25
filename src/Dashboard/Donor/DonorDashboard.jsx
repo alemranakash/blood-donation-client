@@ -93,9 +93,7 @@ const DonorDashboard = () => {
 
     // *=====================
 
-    const handleViewClick = (index) => {
-        console.log(`View button clicked for request ${index + 1}`);
-    };
+   
 
     // Check if the user's email matches the requesterEmail in any blood donation request
     const userHasRequests = recentBloodRequest.some(request => request.requesterEmail === user?.email);
@@ -178,12 +176,14 @@ const DonorDashboard = () => {
                                                 Delete
                                             </button>
 
+                                            <Link className="bg-blue-300 text-center hover:bg-blue-700 text-black font-bold py-2 px-4 rounded" to={`bloodDonationDetails/${request._id}`}>
                                             <button
-                                                className="bg-blue-300 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded"
-                                                onClick={() => handleViewClick(index)}
+                                                className=""
+                                                
                                             >
                                                 View
                                             </button>
+                                            </Link>
                                         </ul>
                                     </div>
 

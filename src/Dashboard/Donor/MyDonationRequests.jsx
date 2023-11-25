@@ -1,32 +1,89 @@
 // import { Link } from "react-router-dom";
 import useBloodRequest from "../../Hooks/useBloodRequest";
 import useAuth from "../../Hooks/useAuth";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 const MyDonationRequests = () => {
-    const [bloodRequest] = useBloodRequest();
+    const [bloodRequest, refetch] = useBloodRequest();
+    const axiosPublic = useAxiosPublic
     const { user } = useAuth();
 
- 
 
-    const handleDoneClick = (index) => {
-        console.log(`Done button clicked for request ${index + 1}`);
+
+    // * Done Button
+    const handleDoneClick = (request) => {
+        axiosPublic.patch(`/bloodRequest/done/${request._id}`)
+            .then(res => {
+                console.log(res.data)
+                if (res.data.modifiedCount > 0) {
+
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: `Blood Donation Done!`,
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            })
+        refetch();
+
     };
 
-    const handleCancelClick = (index) => {
-        console.log(`Cancel button clicked for request ${index + 1}`);
+    // * Cancel Button
+    const handleCancelClick = (id) => {
+        axiosPublic.patch(`/bloodRequest/cancel/${id}`)
+            .then(res => {
+                console.log(res.data)
+                if (res.data.modifiedCount > 0) {
+
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: `Blood Donation Canceled !`,
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            })
+        refetch();
     };
 
-    const handleEditClick = (index) => {
-        console.log(`Edit button clicked for request ${index + 1}`);
+
+
+    // * delete button===========
+
+    const handleDeleteClick = (id) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                axiosPublic.delete(`/bloodRequest/${id}`)
+                    .then(res => {
+                        if (res.data.deletedCount > 0) {
+
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your file has been deleted.",
+                                icon: "success"
+                            });
+                        }
+                        refetch();
+                    })
+            }
+        });
     };
 
-    const handleDeleteClick = (index) => {
-        console.log(`Delete button clicked for request ${index + 1}`);
-    };
-
-    const handleViewClick = (index) => {
-        console.log(`View button clicked for request ${index + 1}`);
-    };
+    // *=====================
 
 
     // Check if the user's email matches the requesterEmail in any blood donation request
@@ -35,7 +92,7 @@ const MyDonationRequests = () => {
     if (!userHasRequests) {
         return (
             <div>
-               
+
                 <p className="text-center text-3xl ">No blood donation Requests</p>
             </div>
         );
@@ -43,7 +100,7 @@ const MyDonationRequests = () => {
 
     return (
         <div>
-           
+
 
             <h1 className="text-2xl mt-5 mb-3">My all Blood Requests</h1>
             <div className="overflow-x-auto">
@@ -68,55 +125,59 @@ const MyDonationRequests = () => {
                                 <td className="border border-gray-200 p-2">{request.donationStatus}</td>
                                 <td className="border border-gray-200 p-2 space-x-2">
 
-<div className="dropdown dropdown-left">
-    <label tabIndex={0} className="btn btn-sm bg-black text-white ">Click</label>
-    <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-        <div className="flex space-x-2 mb-2">
-            {request.donationStatus === "inprogress" && (
-                <>
-                    <button
-                        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-                        onClick={() => handleDoneClick(index)}
-                    >
-                        Done
-                    </button>
-                    <button
-                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                        onClick={() => handleCancelClick(index)}
-                    >
-                        Cancel
-                    </button>
-                </>
-            )}
-        </div>
-        <button
-            className="bg-blue-300 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded"
-            onClick={() => handleEditClick(index)}
-        >
-            Edit
-        </button>
-        <button
-            className="bg-blue-300 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded"
-            onClick={() => handleDeleteClick(index)}
-        >
-            Delete
-        </button>
+                                    <div className="dropdown dropdown-left">
+                                        <label tabIndex={0} className="btn btn-sm bg-black text-white ">Click</label>
+                                        <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                                            <div className="flex space-x-2 mb-2">
+                                                {request.donationStatus === "inprogress" && (
+                                                    <>
+                                                        <button
+                                                            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                                                            onClick={() => handleDoneClick(index)}
+                                                        >
+                                                            Done
+                                                        </button>
+                                                        <button
+                                                            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                                                            onClick={() => handleCancelClick(index)}
+                                                        >
+                                                            Cancel
+                                                        </button>
+                                                    </>
+                                                )}
+                                            </div>
+                                            <Link className="bg-blue-300 text-center hover:bg-blue-700 text-black font-bold py-2 px-4 rounded" to={`editBloodRequest/${request._id}`}>
+                                                <button
+                                                    className=""
 
-        <button
-            className="bg-blue-300 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded"
-            onClick={() => handleViewClick(index)}
-        >
-            View
-        </button>
-    </ul>
-</div>
+                                                >
+                                                    Edit
+                                                </button>
+                                            </Link>
+                                            <button
+                                                className="bg-blue-300 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded"
+                                                onClick={() => handleDeleteClick(index)}
+                                            >
+                                                Delete
+                                            </button>
 
-</td>
+                                            <Link className="bg-blue-300 text-center hover:bg-blue-700 text-black font-bold py-2 px-4 rounded" to={`bloodDonationDetails/${request._id}`}>
+                                                <button
+                                                    className=""
+
+                                                >
+                                                    View
+                                                </button>
+                                            </Link>
+                                        </ul>
+                                    </div>
+
+                                </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
-             
+
             </div>
         </div>
     );

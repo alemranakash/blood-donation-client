@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 
 const BloodDonationDetails = () => {
     const axiosPublic = useAxiosPublic()
-    // const { user } = useAuth();
+    const { user } = useAuth();
     const { id } = useParams();
     const [bloodRequest, loading, refetch] = useBloodRequest()
 
@@ -24,9 +24,15 @@ const BloodDonationDetails = () => {
         return formattedTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
     };
 
+    const donorInfo= {
+        donorName: user.displayName,
+        donorEmail: user.email
+    }
+    console.log(donorInfo);
+
     // * Done Button
     const handleDonate = (id) => {
-        axiosPublic.patch(`/bloodRequest/donate/${id}`)
+        axiosPublic.patch(`/bloodRequest/donate/${id}`, {donorInfo})
         .then(res =>{
             console.log(res.data)
             if(res.data.modifiedCount > 0){
@@ -40,7 +46,7 @@ const BloodDonationDetails = () => {
                   });
             }
         })
-        refetch();
+        .then(refetch);
 
     };
 

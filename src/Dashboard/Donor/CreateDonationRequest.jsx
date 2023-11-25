@@ -133,57 +133,31 @@
 import useAuth from "../../Hooks/useAuth";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import swal from 'sweetalert';
+// import useBloodRequest from "../../Hooks/useBloodRequest";
+import { useParams } from "react-router-dom";
+import useUsers from "../../Hooks/useUsers";
+
+
+
 
 const CreateDonationRequest = () => {
-    const axiosPublic= useAxiosPublic()
+    const axiosPublic = useAxiosPublic()
     const { user } = useAuth();
+    const { id } = useParams();
+    console.log(id);
+
     console.log(user);
+    const [users, loading, refetch] = useUsers()
 
-//     const handleFormSubmit = (e) => {
-//         e.preventDefault();
-//         const requesterName= e.target.requesterName.value
-//         const requesterEmail = e.target.requesterEmail.value
-//         const recipientName = e.target.recipientName.value
-//         const district = e.target.district.value;
-//         const upazila = e.target.upazila.value;
-//         const hospitalName = e.target.hospitalName.value;
-//         const fullAddress = e.target.fullAddress.value;
-//         const donationDate = e.target.donationDate.value;
-//         const donationTime = e.target.donationTime.value;
-//         const requestMessage = e.target.requestMessage.value;
+    if (loading) {
+        console.log("Data is still loading. Please wait...");
+        return;
+    }
 
-//         // console.log(requesterName, requesterEmail ,recipientName, district, upazila, hospitalName, fullAddress, donationDate, donationTime, requestMessage);
-        
-// const createRequest = {
-//     requesterName, requesterEmail ,recipientName, district, upazila, hospitalName, fullAddress, donationDate, donationTime, requestMessage, donationStatus: "pending"
-// }
+    const singleUser = users.find(request => request.email === user.email)
+    console.log(singleUser);
 
-// console.log(createRequest);
-
-// axios
-// .post('/bloodRequest', createRequest, {
-//   headers: {
-//     'Content-Type': 'application/json',
-//   },
-// })
-// .then((response) => {
-//   console.log(response.data);
-
- 
-//   if (response.data.insertedId) {
-//     swal({
-//       title: 'Blog Added',
-//       text: 'Blog added successfully',
-//       icon: 'success',
-//     });
-//   }
-// })
-// .catch((error) => {
-//   console.error(error);
-  
-// });
-
-//     }
+    console.log(singleUser.status);
 
 
 
@@ -415,10 +389,12 @@ const CreateDonationRequest = () => {
                                     <button
                                         className="btn btn-sm rounded-md border-black hover:bg-black hover:text-white bg-none text-black"
                                         type="submit"
+                                        disabled={singleUser.status === "block"}
                                     >
-                                        Request
+                                        {singleUser.status === "block" ? "Blocked" : "Request"}
                                     </button>
                                 </div>
+
 
                             </form>
                         </div>

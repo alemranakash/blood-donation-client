@@ -110,6 +110,12 @@ const DonorDashboard = () => {
         );
     }
 
+    const formatTime = (time) => {
+        const formattedTime = new Date(`1970-01-01T${time}`);
+        return formattedTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    };
+
+
     return (
         <div>
             <h2 className="text-5xl text-center  mb-5">
@@ -124,6 +130,7 @@ const DonorDashboard = () => {
                         <tr>
                             <th className="border border-gray-200 p-2">Recipient Name</th>
                             <th className="border border-gray-200 p-2">Recipient Location</th>
+                            <th className="border border-gray-200 p-2">Recipient Blood Group</th>
                             <th className="border border-gray-200 p-2">Donation Date</th>
                             <th className="border border-gray-200 p-2">Donation Time</th>
                             <th className="border border-gray-200 p-2">Donation Status</th>
@@ -133,12 +140,13 @@ const DonorDashboard = () => {
                     <tbody>
                         {recentBloodRequest.map((request, index) => (
                             <tr key={index} className="border border-gray-200">
-                                <td className="border border-gray-200 p-2">{request.recipientName}</td>
-                                <td className="border border-gray-200 p-2">{`${request.district}, ${request.upazila}`}</td>
-                                <td className="border border-gray-200 p-2">{request.donationDate}</td>
-                                <td className="border border-gray-200 p-2">{request.donationTime}</td>
-                                <td className="border border-gray-200 p-2">{request.donationStatus}</td>
-                                <td className="border border-gray-200 p-2 space-x-2">
+                                <td className="border text-center border-gray-200 p-2">{request.recipientName}</td>
+                                <td className="border text-center border-gray-200 p-2"> <div>{request.district},</div> <div>{request.upazila}</div></td>
+                                <td className="border text-center border-gray-200 p-2">{request.bloodGroup}</td>
+                                <td className="border text-center border-gray-200 p-2">{request.donationDate}</td>
+                                <td className="border text-center border-gray-200 p-2">{formatTime(request.donationTime)}</td>
+                                <td className="border text-center border-gray-200 p-2">{request.donationStatus}</td>
+                                <td className="border text-center border-gray-200 p-2 space-x-2">
 
                                     <div className="dropdown dropdown-left">
                                         <label tabIndex={0} className="btn btn-sm bg-black text-white ">Click</label>
@@ -196,8 +204,9 @@ const DonorDashboard = () => {
                         ))}
                     </tbody>
                 </table>
-                <NavLink to="/dashboard/my-donation-requests" className="text-black text-center justify-center items-center mx-auto  btn-info btn font-bold">View my all Request</NavLink>
+               
             </div>
+            <NavLink to="/dashboard/my-donation-requests" className="text-black flex w-fit text-center justify-center items-center mx-auto mt-5  btn-info btn font-bold">View my all Request</NavLink>
         </div>
     );
 };

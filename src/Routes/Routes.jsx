@@ -13,6 +13,8 @@ import AdminDashboard from "../Dashboard/Admin/AdminDashboard";
 import MyDonationRequests from "../Dashboard/Donor/MyDonationRequests";
 import EditBloodRequest from "../Dashboard/Donor/EditBloodRequest";
 import BloodDonationDetails from "../Dashboard/Donor/BloodDonationDetails";
+import AllUsers from "../Dashboard/Admin/AllUsers";
+import AllBloodDonationRequest from "../Dashboard/Admin/AllBloodDonationRequest";
 
 export const router = createBrowserRouter([
     {
@@ -82,6 +84,23 @@ export const router = createBrowserRouter([
               {
                 path: "adminDashboard",
                 element: <AdminDashboard></AdminDashboard>
+              },
+              {
+                path: "all-users",
+                element: <AllUsers></AllUsers>
+              },
+              {
+                path: "all-blood-donation-request",
+                element: <AllBloodDonationRequest></AllBloodDonationRequest>
+              },
+              {
+                path: "all-blood-donation-request/bloodDonationDetails/:id",
+                element: <PrivateRoutes><BloodDonationDetails></BloodDonationDetails></PrivateRoutes>,
+              },
+              {
+                path: "all-blood-donation-request/editBloodRequest/:id",
+                element: <PrivateRoutes><EditBloodRequest></EditBloodRequest></PrivateRoutes>,
+                
               },
             ]
           },

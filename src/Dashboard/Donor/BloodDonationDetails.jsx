@@ -57,6 +57,7 @@ const BloodDonationDetails = () => {
             <h1>Recipient name: {singleData.recipientName}</h1>
             <h1>Recipient District: {singleData.district}</h1>
             <h1>Recipient Upazila: {singleData.upazila}</h1>
+            <h1>Recipient Blood Group: {singleData.bloodGroup}</h1>
             <h1>Hospital Name: {singleData.hospitalName}</h1>
             <h1>Full address line: {singleData.fullAddress}</h1>
             <h1>Donation date: {singleData.donationDate}</h1>

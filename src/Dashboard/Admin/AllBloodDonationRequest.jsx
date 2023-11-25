@@ -1,14 +1,14 @@
-
-
 import { useState } from 'react';
-import useBloodRequest from "../../Hooks/useBloodRequest";
-import useAuth from "../../Hooks/useAuth";
-import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
+import useBloodRequest from '../../Hooks/useBloodRequest';
+import useAxiosPublic from '../../Hooks/useAxiosPublic';
+import useAuth from '../../Hooks/useAuth';
 
-const MyDonationRequests = () => {
-  const [bloodRequest, loading, refetch] = useBloodRequest();
+
+
+const AllBloodDonationRequest = () => {
+    const [bloodRequest, loading, refetch] = useBloodRequest();
   const axiosPublic = useAxiosPublic();
   const { user } = useAuth();
   const [currentPage, setCurrentPage] = useState(1);
@@ -30,7 +30,7 @@ const MyDonationRequests = () => {
   // Check if the user's email matches the requesterEmail in any blood donation request for the current page
   const userHasRequests = filteredBloodRequest
     .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
-    .some((request) => request.requesterEmail === user?.email);
+    
 
   if (!userHasRequests) {
     return (
@@ -110,7 +110,6 @@ const MyDonationRequests = () => {
     setCurrentPage(1); // Reset to the first page when changing status
   };
 
-
   const formatTime = (time) => {
     const formattedTime = new Date(`1970-01-01T${time}`);
     return formattedTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
@@ -144,7 +143,6 @@ const MyDonationRequests = () => {
             <tr>
               <th className="border border-gray-200 p-2">Recipient Name</th>
               <th className="border border-gray-200 p-2">Recipient Location</th>
-              <th className="border border-gray-200 p-2">Recipient Blood Group</th>
               <th className="border border-gray-200 p-2">Donation Date</th>
               <th className="border border-gray-200 p-2">Donation Time</th>
               <th className="border border-gray-200 p-2">Donation Status</th>
@@ -153,10 +151,9 @@ const MyDonationRequests = () => {
           </thead>
           <tbody>
             {currentRequests.map((request, index) => (
-              <tr key={index} className="border text-center border-gray-200">
+              <tr key={index} className="border border-gray-200">
                 <td className="border text-center border-gray-200 p-2">{request.recipientName}</td>
-                <td className="border border-gray-200 p-2">{`${request.district}, ${request.upazila}`}</td>
-                <td className="border text-center  border-gray-200 p-2">{request.bloodGroup}</td>
+                <td className="border text-center border-gray-200 p-2">{`${request.district}, ${request.upazila}`}</td>
                 <td className="border text-center border-gray-200 p-2">{request.donationDate}</td>
                 <td className="border text-center border-gray-200 p-2">{formatTime(request.donationTime)}</td>
                 <td className="border text-center border-gray-200 p-2">
@@ -173,7 +170,7 @@ const MyDonationRequests = () => {
                 <td className="border border-gray-200 p-2 space-x-2">
                   <div className="dropdown dropdown-left">
                     <label tabIndex={0} className="btn btn-sm bg-black text-white ">
-                      Actions
+                      Click
                     </label>
                     <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
                       <div className="flex space-x-2 mb-2">
@@ -238,5 +235,4 @@ const MyDonationRequests = () => {
   );
 };
 
-export default MyDonationRequests;
-
+export default AllBloodDonationRequest;

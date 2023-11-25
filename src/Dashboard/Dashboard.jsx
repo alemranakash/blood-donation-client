@@ -6,7 +6,7 @@ import Navbar from "../Components/Navbar";
 const Dashboard = () => {
    
 
-    const isAdmin = !true
+    const isAdmin = true
     const isVolunteer = !true
 
 
@@ -60,6 +60,14 @@ const Dashboard = () => {
 <li>
 <NavLink to="/dashboard/adminDashboard"> 
         Admin Dashboard</NavLink>
+</li>
+<li>
+<NavLink to="all-users">
+        All User</NavLink>
+</li>
+<li>
+<NavLink to="all-blood-donation-request">
+        All Blood Donation Request</NavLink>
 </li>
 <li><a>Admin</a></li>
 </div>

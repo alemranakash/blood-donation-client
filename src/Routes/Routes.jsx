@@ -11,6 +11,7 @@ import CreateDonationRequest from "../Dashboard/Donor/CreateDonationRequest";
 import DonorDashboard from "../Dashboard/Donor/DonorDashboard";
 import AdminDashboard from "../Dashboard/Admin/AdminDashboard";
 import MyDonationRequests from "../Dashboard/Donor/MyDonationRequests";
+import EditBloodRequest from "../Dashboard/Donor/EditBloodRequest";
 
 export const router = createBrowserRouter([
     {
@@ -46,7 +47,7 @@ export const router = createBrowserRouter([
               {
                 path: "profile/updateUser/:id",
                 element: <UpdateUser></UpdateUser>,
-                loader: ({params})=> fetch(`http://localhost:5000/users/${params.id}`)
+                // loader: ({params})=> fetch(`http://localhost:5000/users/${params.id}`)
               },
              { path: "create-donation-request",
               element: <PrivateRoutes><CreateDonationRequest></CreateDonationRequest></PrivateRoutes>
@@ -55,6 +56,11 @@ export const router = createBrowserRouter([
               {
                 path: "my-donation-requests",
                 element: <MyDonationRequests></MyDonationRequests>
+              },
+              {
+                path: "donorDashboard/editBloodRequest/:id",
+                element: <PrivateRoutes><EditBloodRequest></EditBloodRequest></PrivateRoutes>,
+                // loader: ({params})=> fetch(`http://localhost:5000/bloodRequest/${params.id}`)
               },
 
 

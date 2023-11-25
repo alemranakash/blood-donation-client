@@ -2,7 +2,7 @@
 import { NavLink} from "react-router-dom";
 // import swal from 'sweetalert';
 import Swal from "sweetalert2";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 import useBloodRequest from "../../Hooks/useBloodRequest";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
@@ -20,12 +20,13 @@ const DonorDashboard = () => {
 
     console.log(recentBloodRequest);
 
-    const handleDoneClick = (id) => {
-        axiosPublic.patch(`/bloodRequest/done/${id}`)
+    // * Done Button
+    const handleDoneClick = (request) => {
+        axiosPublic.patch(`/bloodRequest/done/${request._id}`)
         .then(res =>{
             console.log(res.data)
             if(res.data.modifiedCount > 0){
-                // refetch();
+                
                 Swal.fire({
                     position: "top-end",
                     icon: "success",
@@ -35,15 +36,17 @@ const DonorDashboard = () => {
                   });
             }
         })
+        refetch();
 
     };
 
+    // * Cancel Button
     const handleCancelClick = (id) => {
         axiosPublic.patch(`/bloodRequest/cancel/${id}`)
         .then(res =>{
             console.log(res.data)
             if(res.data.modifiedCount > 0){
-                // refetch();
+               
                 Swal.fire({
                     position: "top-end",
                     icon: "success",
@@ -53,11 +56,10 @@ const DonorDashboard = () => {
                   });
             }
         })
+        refetch();
     };
 
-    const handleEditClick = (index) => {
-        console.log(`Edit button clicked for request ${index + 1}`);
-    };
+   
 
     // * delete button===========
 
@@ -148,7 +150,7 @@ const DonorDashboard = () => {
                                                     <>
                                                         <button
                                                             className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-                                                            onClick={() => handleDoneClick(request._id)}
+                                                            onClick={() => handleDoneClick(request)}
                                                         >
                                                             Done
                                                         </button>
@@ -161,12 +163,14 @@ const DonorDashboard = () => {
                                                     </>
                                                 )}
                                             </div>
+                                            <Link className="bg-blue-300 text-center hover:bg-blue-700 text-black font-bold py-2 px-4 rounded" to={`editBloodRequest/${request._id}`}>
                                             <button
-                                                className="bg-blue-300 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded"
-                                                onClick={() => handleEditClick(index)}
+                                                className=""
+                                                
                                             >
                                                 Edit
                                             </button>
+                                            </Link>
                                             <button
                                                 className="bg-blue-300 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded"
                                                 onClick={() => handleDeleteClick(request._id)}

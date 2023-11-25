@@ -1,4 +1,5 @@
 import { NavLink, Outlet } from "react-router-dom";
+import Navbar from "../Components/Navbar";
 
 
 
@@ -13,7 +14,11 @@ const Dashboard = () => {
 
 
     return (
-        <div className="flex ">
+     <div>
+        <Navbar></Navbar>
+       
+           <div className="flex ">
+            
         {/* dashboard side bar */}
         <div className="w-64 min-h-screen bg-orange-400">
         <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
@@ -26,11 +31,15 @@ const Dashboard = () => {
    <div>
 
    <li>
+<NavLink to="/dashboard/donorDashboard"> 
+        Donor Dashboard</NavLink>
+</li>
+   <li>
 <NavLink to="/dashboard/profile"> 
         Profile</NavLink>
 </li>
      <li>
-<NavLink to="/myDonationRequests">
+<NavLink to="my-donation-requests">
         My Donation Request</NavLink>
 </li>
      <li>
@@ -45,7 +54,17 @@ const Dashboard = () => {
 
 
 {/* Admin section */}
-{isAdmin && <li><a>Admin</a></li>}
+{isAdmin && 
+
+<div>
+<li>
+<NavLink to="/dashboard/adminDashboard"> 
+        Admin Dashboard</NavLink>
+</li>
+<li><a>Admin</a></li>
+</div>
+
+}
 
 
 {/* Volunteer section */}
@@ -60,6 +79,7 @@ const Dashboard = () => {
             <Outlet></Outlet>
         </div>
     </div>
+     </div>
     );
 };
 

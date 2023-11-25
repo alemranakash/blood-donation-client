@@ -9,6 +9,8 @@ import PrivateRoutes from "./PrivateRoutes";
 import UpdateUser from "../Dashboard/UserProfile/UpdateUser";
 import CreateDonationRequest from "../Dashboard/Donor/CreateDonationRequest";
 import DonorDashboard from "../Dashboard/Donor/DonorDashboard";
+import AdminDashboard from "../Dashboard/Admin/AdminDashboard";
+import MyDonationRequests from "../Dashboard/Donor/MyDonationRequests";
 
 export const router = createBrowserRouter([
     {
@@ -34,6 +36,10 @@ export const router = createBrowserRouter([
             element: <Dashboard></Dashboard>,
             children:[
               {
+                path: "donorDashboard",
+                element: <DonorDashboard></DonorDashboard>
+              },
+              {
                 path: "profile",
                 element: <PrivateRoutes><UserProfile></UserProfile></PrivateRoutes>,
               },
@@ -45,9 +51,17 @@ export const router = createBrowserRouter([
              { path: "create-donation-request",
               element: <PrivateRoutes><CreateDonationRequest></CreateDonationRequest></PrivateRoutes>
             },
+            
               {
-                path: "",
-                element: <DonorDashboard></DonorDashboard>
+                path: "my-donation-requests",
+                element: <MyDonationRequests></MyDonationRequests>
+              },
+
+
+              // *Admin section
+              {
+                path: "adminDashboard",
+                element: <AdminDashboard></AdminDashboard>
               },
             ]
           },

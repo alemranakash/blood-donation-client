@@ -145,7 +145,17 @@ const DonorDashboard = () => {
                                 <td className="border text-center border-gray-200 p-2">{request.bloodGroup}</td>
                                 <td className="border text-center border-gray-200 p-2">{request.donationDate}</td>
                                 <td className="border text-center border-gray-200 p-2">{formatTime(request.donationTime)}</td>
-                                <td className="border text-center border-gray-200 p-2">{request.donationStatus}</td>
+                                <td className="border text-center border-gray-200 p-2">
+                  {request.donationStatus === "inprogress" ? (
+                    <>
+                      <div className="text-green-500 font-bold uppercase text-center">{`${request.donationStatus}`}</div>
+                      <div>Donor Name: <span className="font-medium">{` ${request.donorName}`}</span> </div>
+                      <div>{`Donor Email: ${request.donorEmail}`}</div>
+                    </>
+                  ) : (
+                    <div className="font-bold text-center uppercase">{`${request.donationStatus}`}</div>
+                  )}
+                </td>
                                 <td className="border text-center border-gray-200 p-2 space-x-2">
 
                                     <div className="dropdown dropdown-left">

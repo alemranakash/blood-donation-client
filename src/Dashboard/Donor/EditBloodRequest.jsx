@@ -33,6 +33,7 @@ console.log(singleData);
       
         const updatedRecipientName = e.target.recipientName.value;
         const updatedDistrict = e.target.district.value;
+        const updatedBloodGroup = e.target.bloodGroup.value
         const updatedUpazila = e.target.upazila.value;
         const updatedHospitalName = e.target.hospitalName.value;
         const updatedFullAddress = e.target.fullAddress.value;
@@ -45,6 +46,7 @@ console.log(singleData);
             
             recipientName: updatedRecipientName,
             district: updatedDistrict,
+            bloodGroup: updatedBloodGroup,
             upazila: updatedUpazila,
             hospitalName: updatedHospitalName,
             fullAddress: updatedFullAddress,

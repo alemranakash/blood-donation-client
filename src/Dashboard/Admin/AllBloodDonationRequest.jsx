@@ -10,7 +10,7 @@ import useAuth from '../../Hooks/useAuth';
 const AllBloodDonationRequest = () => {
     const [bloodRequest, loading, refetch] = useBloodRequest();
   const axiosPublic = useAxiosPublic();
-  const { user } = useAuth();
+  // const { user } = useAuth();
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedStatus, setSelectedStatus] = useState('all'); // Default to 'all'
   const itemsPerPage = 5;
@@ -117,7 +117,7 @@ const AllBloodDonationRequest = () => {
 
   return (
     <div>
-      <h1 className="text-2xl mt-5 mb-3">My all Blood Requests</h1>
+      <h1 className="text-2xl mt-5 mb-3">All Blood Requests</h1>
       {/* Filter dropdown */}
       <div className="mb-4">
         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="donationStatus">

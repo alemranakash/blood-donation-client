@@ -6,8 +6,8 @@ import Navbar from "../Components/Navbar";
 const Dashboard = () => {
    
 
-    const isAdmin = true
-    const isVolunteer = !true
+    const isAdmin = !true
+    const isVolunteer = true
 
 
 
@@ -80,7 +80,26 @@ const Dashboard = () => {
 
 
 {/* Volunteer section */}
-{isVolunteer && <li><a>Volunteer</a></li>}
+{isVolunteer && 
+<div>
+<li>
+<NavLink to="/dashboard/volunteerDashboard"> 
+        Volunteer Dashboard</NavLink>
+</li>
+
+<li>
+<NavLink to="all-blood-donation-request">
+        All Blood Donation Request</NavLink>
+</li>
+
+<li>
+<NavLink to="content-management">
+        Content Management</NavLink>
+</li>
+
+<li><a>Volunteer</a></li>
+</div>
+}
 
 
 </ul>

@@ -17,6 +17,7 @@ import AllUsers from "../Dashboard/Admin/AllUsers";
 import AllBloodDonationRequest from "../Dashboard/Admin/AllBloodDonationRequest";
 import ContentManagement from "../Dashboard/Admin/ContentManagement";
 import AddBlogs from "../Dashboard/Admin/AddBlogs";
+import VolunteerDashboard from "../Dashboard/Volunteer/VolunteerDashboard";
 
 export const router = createBrowserRouter([
     {
@@ -112,6 +113,14 @@ export const router = createBrowserRouter([
                 path: "content-management/add-blog",
                 element: <AddBlogs></AddBlogs>
               },
+
+
+              // * Volunteer Section
+              {
+                path: "volunteerDashboard",
+                element: <VolunteerDashboard></VolunteerDashboard>
+              },
+
             ]
           },
       ]

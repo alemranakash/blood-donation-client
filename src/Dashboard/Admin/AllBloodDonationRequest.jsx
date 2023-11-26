@@ -8,6 +8,9 @@ import useAuth from '../../Hooks/useAuth';
 
 
 const AllBloodDonationRequest = () => {
+  const isVolunteer = true
+
+
     const [bloodRequest, loading, refetch] = useBloodRequest();
   const axiosPublic = useAxiosPublic();
   // const { user } = useAuth();
@@ -191,6 +194,10 @@ const AllBloodDonationRequest = () => {
                           </>
                         )}
                       </div>
+
+                      {!isVolunteer && (
+            <>
+
                       <Link
                         className="bg-blue-300 text-center hover:bg-blue-700 text-black font-bold py-2 px-4 rounded"
                         to={`editBloodRequest/${request._id}`}
@@ -209,6 +216,11 @@ const AllBloodDonationRequest = () => {
                       >
                         <button>{`View`}</button>
                       </Link>
+
+                      </>
+          )}
+
+
                     </ul>
                   </div>
                 </td>

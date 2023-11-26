@@ -1,225 +1,102 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import swal from 'sweetalert';
-import { useContext } from "react";
-import { AuthContext } from "../Provider/AuthProvider";
-import Navbar from "../Components/Navbar";
-import useAxiosPublic from "../Hooks/useAxiosPublic";
-
-const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
-const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 
-const Register = () => {
-    const { register, handleSubmit, reset, formState: { errors } } = useForm();
-    const {createUser,  updateUser, logOut}=useContext(AuthContext)
-    const navigate= useNavigate();
-    const axiosPublic = useAxiosPublic()
+import { useState } from "react";
+import useUsers from "../../../Hooks/useUsers";
 
 
-    const onSubmit = async ( data) => {
-        // e.preventDefault()
-
-// ********************************
-
-  // image upload to imgbb and then get an url
-  const imageFile = { image: data.image[0] }
-  const res = await axiosPublic.post(image_hosting_api, imageFile, {
-      headers: {
-          'content-type': 'multipart/form-data'
-      }
+const SearchPage = () => {
+  const [users, loading] = useUsers();
+  const [searchCriteria, setSearchCriteria] = useState({
+    bloodGroup: "",
+    district: "",
+    upazila: "",
+    email: "",
   });
-//   console.log(res.data);
+  const [filteredUsers, setFilteredUsers] = useState(users);
 
-// ********************************
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setSearchCriteria((prevCriteria) => ({
+      ...prevCriteria,
+      [name]: value,
+    }));
+  };
 
+  const handleSearch = () => {
+    const filtered = users.filter((user) => {
+      const isBloodGroupMatch = !searchCriteria.bloodGroup || user.bloodGroup === searchCriteria.bloodGroup;
+      const isDistrictMatch = !searchCriteria.district || user.district === searchCriteria.district;
+      const isUpazilaMatch = !searchCriteria.upazila || user.upazila === searchCriteria.upazila;
+      const isEmailMatch = !searchCriteria.email || user.email.includes(searchCriteria.email);
 
+      return isBloodGroupMatch && isDistrictMatch && isUpazilaMatch && isEmailMatch;
+    });
 
+    setFilteredUsers(filtered);
 
-    
-        const email = data.email
-        const name =data.name 
-        
-        const photoUrl = res.data.data.display_url
-   
-        const bloodGroup = data.bloodGroup
-        const district = data.district
-        const upazila = data.upazila
-        const password = data.password
-    const confirmPassword = data.confirmPassword
+    setSearchCriteria({
+      bloodGroup: "",
+      district: "",
+      upazila: "",
+      email: "",
+    });
 
-    console.log(email,  name, photoUrl,  bloodGroup, district, upazila, password, confirmPassword)
+  };
 
-    if (res.data.success) {
-        // now send the menu item data to the server with the image url
-        const userData = {
-            email, name, photoUrl, bloodGroup, district, upazila,
-            role: 'donor', status: 'active'
-        }
-        // 
-        const user = await axiosPublic.post('/users', userData);
-        console.log(user.data)
-        
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleSearch();
+  };
 
-    // *==============================
+  if (loading) {
+    console.log("Data is still loading. Please wait...");
+    return <div>Loading...</div>;
+  }
 
-    if (password !== confirmPassword) {
-        swal("Oops!", "Passwords do not match.", "error");
-        return;
-      }
+  return (
+    <div>
+      <h1 className="text-4xl text-center my-5 font-bold mb-8">Search Page</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="bg-white p-4 rounded-lg shadow-md">
+          <form onSubmit={handleSubmit}>
+            {/* Blood Group */}
+            <div className="mb-4">
+              <label htmlFor="bloodGroup" className="block text-sm font-medium text-gray-600">
+                Blood Group
+              </label>
+              <select
+                id="bloodGroup"
+                name="bloodGroup"
+                value={searchCriteria.bloodGroup}
+                onChange={handleInputChange}
+                className="mt-1 p-2 border rounded-md w-full"
+              >
+                <option value="">Select Blood Group</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+              </select>
+            </div>
 
-
-
-    if (password.length < 6) {
-        swal("Oops!", "Password must be at least 6 characters long.", "error");
-        return;
-      }
-    
-      if (!/[A-Z]/.test(password)) {
-        swal("Oops!", "Password must contain at least one capital letter.", "error");
-        return;
-      }
-    
-      if (!/[!@#$%^&*()_+[\]{};':"\\|,.<>/?]+/.test(password)) {
-        swal("Oops!", "Password must contain at least one special character.", "error");
-        return;
-      }
-      if (!/\d/.test(password)) {
-        swal("Oops!", "Password must contain at least one numeric character.", "error");
-        return;
-    }
-
-    
-        // * create user===========================
-createUser(email, password)
-.then(result=>{
-      console.log(result.user)
-      swal("Good job!", "Registration Success!", "success");
-      
-   
-
-       // * update user===========================
- updateUser(name, photoUrl)
- .then(() => {
-console.log("User updated")
-})
-.catch((error) => {
-  console.error(error);
-});
-
-// * logout user after register===========================
-logOut()
-            .then(() => {
-               console.log('logged out')
-            })
-            .catch(error => {
-                console.error(error)
-            })
-
-            navigate("/login");
-
-
-  })
-  .catch(err=>{
-      console.error(err)
-  })
-
-reset()
-
-
-    }
-
-
-    return (
-        <div>
-            <Navbar></Navbar>
-            <div >
-
-                <div className="">
-                    <h1 className="text-3xl mt-10 text-center">Please register Here</h1>
-                    <div className="mx-auto justify-center flex mt-10">
-
-                      <div className="flex lg:flex-row flex-col-reverse justify-center items-center">
-<img className="flex-1 lg:w-1/4" src="https://i.ibb.co/mJktPXw/login.png" alt="" />
-                      <div className="card flex-1 flex-shrink-0 w-full shadow-2xl hover:shadow-blue-500 bg-base-100">
-<form onSubmit={handleSubmit(onSubmit)} className="shadow-2xl hover:shadow-cyan-600 rounded px-8 pt-6 pb-8 mb-4">
-
-
-{/* Email */}
-<div className="form-control">
-        <label className="label">
-            <span className="label-text">Email</span>
-        </label>
-        <input type="email"  {...register("email", { required: true })} name="email" placeholder="email" className="input input-bordered" />
-                                {errors.email && <span className="text-red-600">Email is required</span>}
-        {/* <input type="email" name="email" placeholder="email" className="input rounded-md input-bordered" required /> */}
-    </div>
-
-
-{/* name */}
-    <div className="form-control">
-        <label className="label">
-            <span className="label-text">Name</span>
-        </label>
-        <input type="text"  {...register("name", { required: true })} name="name" placeholder="Name" className="input input-bordered" />
-                                {errors.name && <span className="text-red-600">Name is required</span>}
-    </div>
-
-{/* Photo url
-    <div className="form-control">
-        <label className="label">
-            <span className="label-text">Photo Url</span>
-        </label>
-        <input type="file" name="photoUrl"  placeholder="Photo URL" className="" required />
-    </div> */}
-
-
-<div className="form-control w-full my-6">
-                        <input {...register('image', { required: true })} type="file" className="file-input w-full max-w-xs" />
-                    </div>
-
-
-
-{/* Blood Group */}
-    <div className="form-control">
-        <label className="label">
-            <span className="label-text">Blood group</span>
-        </label>
-        {/* <input type="text" name="photoUrl" placeholder="Photo URL" className="input rounded-md input-bordered" required /> */}
-
-        <select
-        className="shadow border-gray-400 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        defaultValue="default" {...register('bloodGroup', { required: true })}
-
-      >
-         <option disabled value="default">Select a Blood Group</option>
-        <option value="A+">A+</option>
-        <option value="A-">A-</option>
-        <option value="B+">B+</option>
-        <option value="B-">B-</option>
-        <option value="AB+">AB+</option>
-        <option value="AB-">AB-</option>
-        <option value="O+">O+</option>
-        <option value="O-">O-</option>
-      </select>
-    </div>
-
-
-{/* district */}
-<div className="form-control">
-        <label className="label">
-            <span className="label-text">District</span>
-        </label>
-        {/* <input type="text" name="photoUrl" placeholder="Photo URL" className="input rounded-md input-bordered" required /> */}
-
-        <select
-        className="shadow border-gray-400 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        defaultValue="default" {...register('district', { required: true })}
-
-      >
-        <option disabled value="default">Select a District</option>
-      <option value="Cumilla">Cumilla</option>
+            {/* District */}
+            <div className="mb-4">
+              <label htmlFor="district" className="block text-sm font-medium text-gray-600">
+                District
+              </label>
+              <select
+                id="district"
+                name="district"
+                value={searchCriteria.district}
+                onChange={handleInputChange}
+                className="mt-1 p-2 border rounded-md w-full"
+              >
+                <option value="">Select District</option>
+                <option value="Cumilla">Cumilla</option>
 <option value="Feni">Feni</option>
 <option value="Brahmanbaria">Brahmanbaria</option>
 <option value="Rangamati">Rangamati</option>
@@ -283,24 +160,23 @@ reset()
 <option value="Mymensingh">Mymensingh</option>
 <option value="Jamalpur">Jamalpur</option>
 <option value="Netrokona">Netrokona</option>
+              </select>
+            </div>
 
-      </select>
-    </div>
-    
-{/* Upazila */}
-<div className="form-control">
-        <label className="label">
-            <span className="label-text">Upazila</span>
-        </label>
-        {/* <input type="text" name="photoUrl" placeholder="Photo URL" className="input rounded-md input-bordered" required /> */}
-
-        <select
-        className="shadow border-gray-400 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        defaultValue="default" {...register('upazila', { required: true })}
-
-      >
-        <option disabled value="default">Select a Upazila</option>
-       <option value="Debidwar">Debidwar</option>
+            {/* Upazila */}
+            <div className="mb-4">
+              <label htmlFor="upazila" className="block text-sm font-medium text-gray-600">
+                Upazila
+              </label>
+              <select
+                id="upazila"
+                name="upazila"
+                value={searchCriteria.upazila}
+                onChange={handleInputChange}
+                className="mt-1 p-2 border rounded-md w-full"
+              >
+                <option value="">Select Upazila</option>
+                <option value="Debidwar">Debidwar</option>
 <option value="Barura">Barura</option>
 <option value="Brahmanpara">Brahmanpara</option>
 <option value="Chandina">Chandina</option>
@@ -794,64 +670,49 @@ reset()
 <option value="Eidgaon">Eidgaon</option>
 <option value="Madhyanagar">Madhyanagar</option>
 <option value="Dasar">Dasar</option>
-
-      </select>
-    </div>
-
-
-    {/* password */}
-    <div className="form-control">
-                                <label className="label">
-                                    <span className="label-text">Password</span>
-                                </label>
-                                <input type="text"  {...register("password", {
-                                    required: true,
-                                    minLength: 6,
-                                    maxLength: 20,
-                                    pattern: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/
-                                })} placeholder="password" className="input input-bordered" />
-                                {errors.password?.type === 'required' && <p className="text-red-600">Password is required</p>}
-                                {errors.password?.type === 'minLength' && <p className="text-red-600">Password must be 6 characters</p>}
-                                {errors.password?.type === 'maxLength' && <p className="text-red-600">Password must be less than 20 characters</p>}
-                                {errors.password?.type === 'pattern' && <p className="text-red-600">Password must have one Uppercase one lower case, one number and one special character.</p>}
-                              
-                            </div>
-        {/* <input type="password" placeholder="password" name="password" className="input rounded-md input-bordered" required /> */}
-
-
-
-     {/* password */}
-     <div className="form-control">
-                                <label className="label">
-                                    <span className="label-text">Confirm Password</span>
-                                </label>
-                                <input type="text"  {...register("confirmPassword", {
-                                    required: true,
-                                    minLength: 6,
-                                    maxLength: 20,
-                                    pattern: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/
-                                })} placeholder="password" className="input input-bordered" />
-                                {errors.password?.type === 'required' && <p className="text-red-600">Password is required</p>}
-                                {errors.password?.type === 'minLength' && <p className="text-red-600">Password must be 6 characters</p>}
-                                {errors.password?.type === 'maxLength' && <p className="text-red-600">Password must be less than 20 characters</p>}
-                                {errors.password?.type === 'pattern' && <p className="text-red-600">Password must have one Uppercase one lower case, one number and one special character.</p>}
-                              
-                            </div>
-
-
-    {/* Register */}
-    <div className="form-control mt-6">
-        <button className="btn rounded-md   hover:border-black hover:text-black bg-black text-white">Register</button>
-    </div>
-    <h1 className="text-center text-xl my-4">Already have an account ? <Link to={"/login"} className="text-black font-bold">Login Here</Link></h1>
-</form>
-</div>
-                      </div>
-                    </div>
-                </div>
+              </select>
             </div>
+
+            {/* Email */}
+            <div className="mb-4">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-600">
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={searchCriteria.email}
+                onChange={handleInputChange}
+                className="mt-1 p-2 border rounded-md w-full"
+              />
+            </div>
+
+            {/* Search Button */}
+            <button
+              type="submit"
+              className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+            >
+              Search
+            </button>
+          </form>
         </div>
-    );
+
+        {/* Display filtered users */}
+        {filteredUsers.map((user) => (
+          <div key={user.id} className="bg-white p-4 rounded-lg shadow-md">
+            <img src={user.photoUrl} alt="User Photo" className="w-full h-32 object-cover mb-4 rounded-lg" />
+            <h2 className="text-xl font-bold mb-2">{user.name}</h2>
+            <p className="text-gray-600 mb-2">Email: {user.email}</p>
+            <p className="text-gray-600 mb-2">Blood Group: {user.bloodGroup}</p>
+            <p className="text-gray-600 mb-2">Upazila: {user.upazila}</p>
+            <p className="text-gray-600">District: {user.district}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 };
 
-export default Register;
+export default SearchPage;
+

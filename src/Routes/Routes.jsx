@@ -18,6 +18,9 @@ import AllBloodDonationRequest from "../Dashboard/Admin/AllBloodDonationRequest"
 import ContentManagement from "../Dashboard/Admin/ContentManagement";
 import AddBlogs from "../Dashboard/Admin/AddBlogs";
 import VolunteerDashboard from "../Dashboard/Volunteer/VolunteerDashboard";
+import SearchPage from "../Pages/Home/SearchPage/SearchPage";
+import BloodDonationRequest from "../Pages/BloodDonationRequest/BloodDonationRequest";
+import Blog from "../Pages/Blog";
 
 export const router = createBrowserRouter([
     {
@@ -36,11 +39,27 @@ export const router = createBrowserRouter([
             path: "/register",
             element: <Register></Register>
           },
+          {
+            path: "/donation-request-home",
+            element: <BloodDonationRequest></BloodDonationRequest>
+          },
+          {
+            path: "/searchPage",
+            element: <SearchPage></SearchPage>
+          },
+          {
+            path: "/blog",
+            element: <Blog></Blog>
+          },
+          {
+            path: "donation-request-home/bloodDonationDetails/:id",
+            element: <PrivateRoutes><BloodDonationDetails></BloodDonationDetails></PrivateRoutes>,
+          },
 
           // *Dashboard
           {
             path: "/dashboard",
-            element: <Dashboard></Dashboard>,
+            element: <PrivateRoutes><Dashboard></Dashboard></PrivateRoutes>,
             children:[
               {
                 path: "donorDashboard",
@@ -81,6 +100,7 @@ export const router = createBrowserRouter([
                 path: "my-donation-requests/bloodDonationDetails/:id",
                 element: <PrivateRoutes><BloodDonationDetails></BloodDonationDetails></PrivateRoutes>,
               },
+             
 
 
               // *Admin section

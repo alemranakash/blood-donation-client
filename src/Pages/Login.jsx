@@ -9,7 +9,7 @@ import Navbar from "../Components/Navbar";
 
 
 const Login = () => {
-  const { googleLogin, signIn } = useContext(AuthContext)
+  const {  signIn } = useContext(AuthContext)
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -38,18 +38,18 @@ const Login = () => {
 
 
   // * google section================================================================
-  const handleGoogleLogin = () => {
-    googleLogin()
-      .then(result => {
-        console.log(result.user)
-        swal("Good job!", "Login Success!", "success");
-        navigate(location?.state ? location.state : '/')
-      })
-      .catch(error => {
-        console.error(error)
+  // const handleGoogleLogin = () => {
+  //   googleLogin()
+  //     .then(result => {
+  //       console.log(result.user)
+  //       swal("Good job!", "Login Success!", "success");
+  //       navigate(location?.state ? location.state : '/')
+  //     })
+  //     .catch(error => {
+  //       console.error(error)
 
-      })
-  }
+  //     })
+  // }
   // !============================================================================================
 
   return (
@@ -86,8 +86,8 @@ const Login = () => {
     <div className="form-control mt-6">
       <button className="btn rounded-md   hover:border-black hover:text-black bg-black text-white">Login</button>
     </div>
-    <button onClick={handleGoogleLogin} className="btn flex btn-sm btn-outline w-fit mx-auto my-4 rounded-md">Login with google</button>
-    <h1 className="text-center">Have no account ? <Link to={"/register"} className="text-black font-bold hover:underline">Register Here</Link></h1>
+    {/* <button onClick={handleGoogleLogin} className="btn flex btn-sm btn-outline w-fit mx-auto my-4 rounded-md">Login with google</button> */}
+    <h1 className="text-center text-xl mt-5">Have no account ? <Link to={"/register"} className="text-black font-bold hover:underline">Register Here</Link></h1>
   </form>
 </div>
 </div>

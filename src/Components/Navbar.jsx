@@ -10,7 +10,7 @@ const Navbar = () => {
     const authenticatedNavLinks = <>
         <li><NavLink to={"/"}>Home</NavLink></li>
         <li><NavLink to={"/donation-request-home"}>Donation Request</NavLink></li>
-        <li><NavLink to={"/blog-home"}>Blog</NavLink></li>
+        <li><NavLink to={"/blog"}>Blog</NavLink></li>
         <li><NavLink to={"/dashboard"}>Dashboard</NavLink></li>
         <li><NavLink to={"/funding"}>Funding</NavLink></li>
      
@@ -59,10 +59,10 @@ const Navbar = () => {
                         {user ? authenticatedNavLinks : normalNavLinks}
                     </ul>
                 </div>
-                <div className="navbar-end flex gap-5 lg:gap-5">
+                <div className="navbar-end items-center flex gap-5 lg:gap-5">
                     <div className="">
                         {
-                            user ? <div className="flex lg:flex-row flex-col lg:gap-5  items-center">
+                            user ? <div className="flex lg:flex-row flex-col lg:gap-5 lg:items-center  items-center">
                                 {
                                     user.photoURL ?
                                         <img className="w-10 h-10 rounded-full flex-1" src={user.photoURL} alt="" />

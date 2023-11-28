@@ -674,7 +674,7 @@ const SearchPage = () => {
             </div>
 
             {/* Email */}
-            <div className="mb-4">
+            {/* <div className="mb-4">
               <label htmlFor="email" className="block text-sm font-medium text-gray-600">
                 Email
               </label>
@@ -686,7 +686,7 @@ const SearchPage = () => {
                 onChange={handleInputChange}
                 className="mt-1 p-2 border rounded-md w-full"
               />
-            </div>
+            </div> */}
 
             {/* Search Button */}
             <button

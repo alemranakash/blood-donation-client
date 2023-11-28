@@ -2,7 +2,7 @@
 
 const ContactUs = () => {
   return (
-    <div className="flex justify-around items-center mt-16 mb-16">
+    <div className="flex flex-col lg:flex-row justify-around items-center mt-16 mb-16">
       {/* Contact Form */}
       <div className="max-w-md w-full bg-white p-8 rounded-md shadow-md">
         <h2 className="text-2xl font-bold text-orange-500 mb-6">Contact Us</h2>

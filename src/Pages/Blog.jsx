@@ -21,7 +21,7 @@ const Blog = () => {
         <div key={blog.id} className="border border-gray-300 rounded-md p-4 mb-4">
          <div className='flex gap-10 '>
 
-         <img src={blog.photoUrl} alt={blog.title} className="w-full flex-1 mb-4 rounded-md" />
+         <img src={blog.photoUrl} alt={blog.title} className="w-1/2 flex-1 mb-4 rounded-md" />
 
          <div className='flex-1'>
          <h2 className="text-2xl font-bold mb-2">{blog.title}</h2>

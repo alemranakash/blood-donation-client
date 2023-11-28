@@ -14,7 +14,7 @@ const MyDonationRequests = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedStatus, setSelectedStatus] = useState('all'); // Default to 'all'
   const itemsPerPage = 5;
-
+  
   if (loading) {
     console.log("Data is still loading. Please wait...");
     return <div>Loading...</div>;
@@ -101,6 +101,8 @@ const MyDonationRequests = () => {
 
   const currentRequests = filteredBloodRequest.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
+
+  
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
@@ -152,7 +154,8 @@ const MyDonationRequests = () => {
             </tr>
           </thead>
           <tbody>
-            {currentRequests.map((request, index) => (
+            {currentRequests.filter(request => request.requesterEmail === user?.email)
+                .map((request, index) => (
               <tr key={index} className="border text-center border-gray-200">
                 <td className="border text-center border-gray-200 p-2">{request.recipientName}</td>
                 <td className="border border-gray-200 p-2">{`${request.district}, ${request.upazila}`}</td>
@@ -239,4 +242,6 @@ const MyDonationRequests = () => {
 };
 
 export default MyDonationRequests;
+
+
 

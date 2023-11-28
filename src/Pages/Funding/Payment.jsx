@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "./CheckoutForm";
+import Navbar from "../../Components/Navbar";
 
 const stripePromise = loadStripe(import.meta.env.VITE_Payment_Gateway_PK);
 
@@ -16,8 +17,10 @@ const Payment = () => {
   const amount = queryParams.get("amount") || "";
 
   return (
-    <div className="container mx-auto p-8">
-      <h1 className="text-3xl font-bold mb-6">Payment Details</h1>
+   <div>
+    <Navbar></Navbar>
+     <div className="container mx-auto p-8">
+      <h1 className="text-3xl font-bold mb-6 text-center">Payment Details</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* <div>
           <p className="text-gray-700">
@@ -31,8 +34,8 @@ const Payment = () => {
         </div> */}
       </div>
       <div className="mt-4">
-        <p className="text-gray-700">
-          <span className="font-bold">Amount:</span> {amount}
+        <p className="text-gray-700 text-center font-semibold text-xl">Donation
+        Amount: <span className="font-bold text-2xl">{amount} $</span> 
         </p>
       </div>
       <div className="mt-6">
@@ -41,6 +44,7 @@ const Payment = () => {
         </Elements>
       </div>
     </div>
+   </div>
   );
 };
 

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import usePayment from "../../Hooks/usePayment";
+import Navbar from "../../Components/Navbar";
 
 const Funding = () => {
   const [payments, loading] = usePayment();
@@ -29,6 +30,7 @@ const Funding = () => {
 
   return (
     <div>
+      <Navbar></Navbar>
       <div className="bg-gray-100 mt-10 flex items-center justify-center">
         <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
           <h1 className="text-3xl font-bold mb-6 text-center text-blue-500">

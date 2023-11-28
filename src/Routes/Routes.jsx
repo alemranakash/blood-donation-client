@@ -23,11 +23,13 @@ import BloodDonationRequest from "../Pages/BloodDonationRequest/BloodDonationReq
 import Blog from "../Pages/Blog";
 import Funding from "../Pages/Funding/Funding";
 import Payment from "../Pages/Funding/Payment";
+import ErrorPage from "../Pages/Errorpage";
 
 export const router = createBrowserRouter([
     {
       path: "/",
       element: <Root></Root>,
+      errorElement: <ErrorPage></ErrorPage> ,
       children:[
         {
                 path: '/',
@@ -82,7 +84,6 @@ export const router = createBrowserRouter([
               {
                 path: "profile/updateUser/:id",
                 element: <UpdateUser></UpdateUser>,
-                // loader: ({params})=> fetch(`http://localhost:5000/users/${params.id}`)
               },
              { path: "create-donation-request",
               element: <PrivateRoutes><CreateDonationRequest></CreateDonationRequest></PrivateRoutes>
@@ -95,12 +96,10 @@ export const router = createBrowserRouter([
               {
                 path: "my-donation-requests/editBloodRequest/:id",
                 element: <PrivateRoutes><EditBloodRequest></EditBloodRequest></PrivateRoutes>,
-                // loader: ({params})=> fetch(`http://localhost:5000/bloodRequest/${params.id}`)
               },
               {
                 path: "donorDashboard/editBloodRequest/:id",
                 element: <PrivateRoutes><EditBloodRequest></EditBloodRequest></PrivateRoutes>,
-                // loader: ({params})=> fetch(`http://localhost:5000/bloodRequest/${params.id}`)
               },
               {
                 path: "donorDashboard/bloodDonationDetails/:id",

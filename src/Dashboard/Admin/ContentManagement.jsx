@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom';
 import useBlogs from '../../Hooks/useBlogs';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import Swal from "sweetalert2";
+import useRole from '../../Hooks/useRole';
 
 const ContentManagement = () => {
-  const isVolunteer = true;
+  const { isVolunteer, }= useRole()
 
   const axiosPublic = useAxiosPublic();
   const [blogs, loading, refetch] = useBlogs();
@@ -93,11 +94,12 @@ const ContentManagement = () => {
 
       <div>
         {/* Filter dropdown */}
-        <label htmlFor="filter">Filter by Status:</label>
+        <label className='text-lg font-semibold mb-5' htmlFor="filter">Filter by Status:     </label>
         <select
           id="filter"
           onChange={(e) => setFilter(e.target.value)}
           value={filter}
+          className='mb-5'
         >
           <option value="all">All</option>
           <option value="draft">Draft</option>

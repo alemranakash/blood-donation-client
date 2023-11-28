@@ -21,6 +21,8 @@ import VolunteerDashboard from "../Dashboard/Volunteer/VolunteerDashboard";
 import SearchPage from "../Pages/Home/SearchPage/SearchPage";
 import BloodDonationRequest from "../Pages/BloodDonationRequest/BloodDonationRequest";
 import Blog from "../Pages/Blog";
+import Funding from "../Pages/Funding/Funding";
+import Payment from "../Pages/Funding/Payment";
 
 export const router = createBrowserRouter([
     {
@@ -50,6 +52,14 @@ export const router = createBrowserRouter([
           {
             path: "/blog",
             element: <Blog></Blog>
+          },
+          {
+            path: "/funding",
+            element: <PrivateRoutes><Funding></Funding></PrivateRoutes>
+          },
+          {
+            path: "/payment",
+            element: <PrivateRoutes><Payment></Payment></PrivateRoutes>
           },
           {
             path: "donation-request-home/bloodDonationDetails/:id",

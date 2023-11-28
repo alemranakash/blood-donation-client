@@ -5,20 +5,25 @@ import { MdBloodtype } from "react-icons/md";
 import useAuth from "../../Hooks/useAuth";
 import useUsers from "../../Hooks/useUsers";
 import useBloodRequest from "../../Hooks/useBloodRequest";
+import usePayment from "../../Hooks/usePayment";
 
 
 const VolunteerDashboard = () => {
     const { user } = useAuth();
     const [users, loading, ] = useUsers();
     const [bloodRequest]= useBloodRequest()
+    const [payments] = usePayment()
 
     if (loading) {
         console.log("Data is still loading. Please wait...");
         return;
     }
 
-console.log(users.length);
-console.log(bloodRequest.length);
+    console.log(payments);
+    const totalAmount = payments.reduce((acc, payment) => {
+      const amount = parseFloat(payment.totalAmount);
+      return isNaN(amount) ? acc : acc + amount;
+    }, 0);
 
     return (
         <div>
@@ -49,7 +54,7 @@ console.log(bloodRequest.length);
       <h1 className="text-6xl"><RiRefund2Line /></h1>
     </div>
     <div className="stat-title">Total Funding</div>
-    <div className="stat-value">0</div>
+    <div className="stat-value">{totalAmount} $</div>
     {/* <div className="stat-desc">↗︎ 400 (22%)</div> */}
   </div>
   

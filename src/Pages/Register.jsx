@@ -174,7 +174,9 @@ reset()
         <input type="file" name="photoUrl"  placeholder="Photo URL" className="" required />
     </div> */}
 
-
+<label className="label">
+            <span className="label-text">Avatar</span>
+        </label>
 <div className="form-control w-full my-6">
                         <input {...register('image', { required: true })} type="file" className="file-input w-full max-w-xs" />
                     </div>

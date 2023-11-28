@@ -3,12 +3,13 @@ import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import useBloodRequest from '../../Hooks/useBloodRequest';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
-import useAuth from '../../Hooks/useAuth';
+// import useAuth from '../../Hooks/useAuth';
+import useRole from '../../Hooks/useRole';
 
 
 
 const AllBloodDonationRequest = () => {
-  const isVolunteer = !true
+  const { isVolunteer, }= useRole()
 
 
     const [bloodRequest, loading, refetch] = useBloodRequest();

@@ -8,8 +8,8 @@ const Banner = () => {
       style={{ backgroundImage: 'url("https://i.ibb.co/vDKfJDL/pexels-kirill-dratsevich-12227661.jpg")' }}
     >
       <div className="banner-content max-w-2xl">
-        <h1 className="text-4xl mb-8">Join as a Donor</h1>
-        <p className="text-lg mb-12">
+        <h1 className="text-4xl bg-gray-800 px-4 py-2 rounded-lg bg-opacity-40 w-fit mb-8">Join as a Donor</h1>
+        <p className="text-lg bg-gray-800 px-4 py-2 rounded-lg bg-opacity-25 w-fit mb-12">
           Your contribution can save lives. Join us in the noble cause of blood donation.
         </p>
         <div className="button-container">

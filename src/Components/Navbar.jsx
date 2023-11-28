@@ -21,6 +21,8 @@ const Navbar = () => {
     const normalNavLinks =
         <>
             <li><NavLink to={"/"}>Home</NavLink></li>
+            <li><NavLink to={"/donation-request-home"}>Donation Request</NavLink></li>
+            <li><NavLink to={"/blog"}>Blog</NavLink></li>
             <li><NavLink to={"/login"}>Login</NavLink></li>
         <li><NavLink to={"/register"}>Register</NavLink></li>
            

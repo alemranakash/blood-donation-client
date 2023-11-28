@@ -8,9 +8,16 @@ import useBloodRequest from "../../Hooks/useBloodRequest";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 const DonorDashboard = () => {
-    const [bloodRequest, refetch] = useBloodRequest();
+    const [bloodRequest, loading, refetch] = useBloodRequest();
     const { user } = useAuth();
     const axiosPublic= useAxiosPublic()
+
+    if (loading) {
+        console.log("Data is still loading. Please wait...");
+        return;
+    }
+   
+
 
     // Sort bloodRequests by createdAt in descending order
     const sortedBloodRequest = [...bloodRequest].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -18,7 +25,9 @@ const DonorDashboard = () => {
     // Take the first three elements
     const recentBloodRequest = sortedBloodRequest.slice(0, 3);
 
-    console.log(recentBloodRequest);
+    // console.log(recentBloodRequest);
+
+    
 
     // * Done Button
     const handleDoneClick = (request) => {
@@ -34,9 +43,10 @@ const DonorDashboard = () => {
                     showConfirmButton: false,
                     timer: 1500
                   });
+                  refetch();
             }
         })
-        refetch();
+       
 
     };
 
@@ -54,9 +64,10 @@ const DonorDashboard = () => {
                     showConfirmButton: false,
                     timer: 1500
                   });
+                  refetch();
             }
         })
-        refetch();
+       
     };
 
    
@@ -84,8 +95,9 @@ const DonorDashboard = () => {
                                 text: "Your file has been deleted.",
                                 icon: "success"
                             });
+                            refetch();
                         }
-                        refetch();
+                        
                     })
             }
         });
@@ -130,7 +142,7 @@ const DonorDashboard = () => {
                         <tr>
                             <th className="border border-gray-200 p-2">Recipient Name</th>
                             <th className="border border-gray-200 p-2">Recipient Location</th>
-                            <th className="border border-gray-200 p-2">Recipient Blood Group</th>
+                            {/* <th className="border border-gray-200 p-2">Recipient Blood Group</th> */}
                             <th className="border border-gray-200 p-2">Donation Date</th>
                             <th className="border border-gray-200 p-2">Donation Time</th>
                             <th className="border border-gray-200 p-2">Donation Status</th>
@@ -142,7 +154,7 @@ const DonorDashboard = () => {
                             <tr key={index} className="border border-gray-200">
                                 <td className="border text-center border-gray-200 p-2">{request.recipientName}</td>
                                 <td className="border text-center border-gray-200 p-2"> <div>{request.district},</div> <div>{request.upazila}</div></td>
-                                <td className="border text-center border-gray-200 p-2">{request.bloodGroup}</td>
+                                {/* <td className="border text-center border-gray-200 p-2">{request.bloodGroup}</td> */}
                                 <td className="border text-center border-gray-200 p-2">{request.donationDate}</td>
                                 <td className="border text-center border-gray-200 p-2">{formatTime(request.donationTime)}</td>
                                 <td className="border text-center border-gray-200 p-2">
